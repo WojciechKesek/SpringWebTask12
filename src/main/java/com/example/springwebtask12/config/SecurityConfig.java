@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin").password("{noop}Secret_123").roles("ADMIN","CARS")
                 .and()
@@ -19,8 +19,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin3").password("{noop}Secret_123").roles("CARS");
     }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests()
+//                .mvcMatchers(HttpMethod.GET, "/api/cars").hasAnyRole("ADMIN", "CARS")
+//                .mvcMatchers(HttpMethod.POST,"/api/cars").authenticated()
+//                .mvcMatchers("/api/cars/**").hasAuthority("ROLE_USER_ADMIN")
+//                .anyRequest().permitAll()
+//                .and()
+//                .formLogin()
+//                .and()
+//                .logout()
+//                .and()
+//                .mvcMatcher("/api").csrf().disable();
+//    }
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/api/cars").hasAnyRole("ADMIN", "CARS")
                 .mvcMatchers(HttpMethod.POST,"/api/cars").authenticated()
@@ -35,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .headers().frameOptions().disable()
                 .and()
-                .antMatcher("/api").csrf().disable();
+                .csrf().ignoringAntMatchers("/api/**");
     }
-
 }
