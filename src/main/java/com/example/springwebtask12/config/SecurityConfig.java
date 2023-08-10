@@ -19,20 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin3").password("{noop}Secret_123").roles("CARS");
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeHttpRequests()
-//                .mvcMatchers(HttpMethod.GET, "/api/cars").hasAnyRole("ADMIN", "CARS")
-//                .mvcMatchers(HttpMethod.POST,"/api/cars").authenticated()
-//                .mvcMatchers("/api/cars/**").hasAuthority("ROLE_USER_ADMIN")
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin()
-//                .and()
-//                .logout()
-//                .and()
-//                .mvcMatcher("/api").csrf().disable();
-//    }
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
